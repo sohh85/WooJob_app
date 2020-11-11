@@ -23,5 +23,6 @@ function sayHello($name) {
 		phpinfo(); 
 			
 		?>
+		<p>試しに編集！おーい</p>
 	</body>
 </html>
