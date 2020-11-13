@@ -68,7 +68,7 @@ if (!empty($_POST)) {
             <dt>メールアドレス</dt>
             <dd>
 
-              <input type="text" name="email" size="35" maxlength="255" value="<?= h($email); ?>" />
+              <input class="check_user" type="text" name="email" size="35" maxlength="255" value="<?= h($email); ?>" />
               <?php if ($error['login'] === 'blank') : ?>
                 <P class="error">*メールアドレスとパスワードを入力してください</P>
               <?php endif; ?>
@@ -78,7 +78,7 @@ if (!empty($_POST)) {
             </dd>
             <dt>パスワード</dt>
             <dd>
-              <input type="password" name="password" size="35" maxlength="255" value="<?php print h($_POST['password']); ?>" />
+              <input class="check_user" type="password" name="password" size="35" maxlength="255" value="<?php print h($_POST['password']); ?>" />
             </dd>
             <dt>ログイン情報の記録</dt>
             <dd>
@@ -87,7 +87,7 @@ if (!empty($_POST)) {
             </dd>
           </dl>
           <div>
-            <input type="submit" value="ログインする" />
+            <input class="check_user" type="submit" value="ログインする" />
           </div>
         </form>
         <footer class="footer_bottom">

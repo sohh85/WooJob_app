@@ -91,14 +91,14 @@ if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
                     <dl>
                         <dt>ニックネーム<span class="required">必須</span></dt>
                         <dd>
-                            <input type="text" name="name" size="35" maxlength="255" value="<?= (h($_POST['name'])); ?>" />
+                            <input class="check_user" type="text" name="name" size="35" maxlength="255" value="<?= (h($_POST['name'])); ?>" />
                             <?php if ($error['name'] === 'blank') : ?>
                                 <p class="error">*ニックネームを入力してください</p>
                             <?php endif; ?>
                         </dd>
                         <dt>メールアドレス<span class="required">必須</span></dt>
                         <dd>
-                            <input type="text" name="email" size="35" maxlength="255" value="<?= (h($_POST['email'])); ?>" />
+                            <input class="check_user" type="text" name="email" size="35" maxlength="255" value="<?= (h($_POST['email'])); ?>" />
                             <?php if ($error['email'] === 'blank') : ?>
                                 <p class="error">*メールアドレスを入力してください</p>
                             <?php elseif ($error['email'] === 'unfit') : ?>
@@ -112,7 +112,7 @@ if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
                             <?php endif; ?>
                         <dt>パスワード<span class="required">必須</span></dt>
                         <dd>
-                            <input type="password" name="password" size="10" maxlength="20" value="<?= (h($_POST['password'])); ?>" />
+                            <input class="check_user" type="password" name="password" size="10" maxlength="20" value="<?= (h($_POST['password'])); ?>" />
                             <?php if ($error['password'] === 'length') : ?>
                                 <p class="error">*パスワードは8文字以上入力してください</p>
                             <?php endif; ?>
@@ -131,7 +131,7 @@ if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
                             <?php endif; ?>
                         </dd>
                     </dl>
-                    <div><input type="submit" value="入力内容を確認する" /></div>
+                    <div><input class="check_user" type="submit" value="入力内容を確認する" /></div>
                 </form>
                 <footer class="footer_bottom">
                     <p>Copyright - 赤坂 壮, 2020 All Rights Reserved.</p>
