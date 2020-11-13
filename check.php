@@ -8,7 +8,16 @@ if (!isset($_SESSION['join'])) {
 	exit();
 }
 
+$name = $_SESSION['join']['name'];
+$password = $_SESSION['join']['password'];
+$password_hide = str_repeat('*', strlen($password));
+
 if (!empty($_POST)) {
+
+	// 前後にある半角全角スペースを削除
+	$name = spaceTrim($name);
+	$password = spaceTrim($password);
+
 	$stmt = $dbh->prepare('INSERT INTO members SET name=?, email=?, password=?, picture=?, created=NOW()');
 	$stmt->execute(array(
 		$_SESSION['join']['name'],
@@ -22,6 +31,17 @@ if (!empty($_POST)) {
 	header('Location: thanks.php');
 	exit();
 }
+
+
+// 前後にある半角全角スペースを削除する関数
+function spaceTrim($str)
+{
+    // 行頭
+    $str = preg_replace('/^[ ]+/u', '', $str);
+    // 末尾
+    $str = preg_replace('/[ ]+$/u', '', $str);
+    return $str;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -29,7 +49,6 @@ if (!empty($_POST)) {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>会員登録</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -54,16 +73,16 @@ if (!empty($_POST)) {
 					<input type="hidden" name="action" value="submit" />
 					<dl>
 						<dt>ニックネーム</dt>
-						<?php echo (h($_SESSION['join']['name'])); ?>
+						<?= (h($_SESSION['join']['name'])); ?>
 						<dd>
 						</dd>
 						<dt>メールアドレス</dt>
-						<?php echo (h($_SESSION['join']['email'])); ?>
+						<?= (h($_SESSION['join']['email'])); ?>
 						<dd>
 						</dd>
 						<dt>パスワード</dt>
 						<dd>
-							【表示されません】
+						<dt><?= $password_hide ?></dt>
 						</dd>
 						<dt>写真など</dt>
 						<dd>

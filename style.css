@@ -50,7 +50,7 @@ a {
 #content {
 	padding: 20px;
 	background:#f8f8f8;
-	width: 720px;
+	width: 730px;
 	min-height: 490px;
 	margin: 0 auto;
 	margin-bottom: 10px;
@@ -130,6 +130,11 @@ li {
 .error {
 	font-size: 90%;
 	color: #BB1850;
+}
+
+.check_user {
+  width: 70%;
+  height: 30px;
 }
 
 #lead {
