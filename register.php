@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'pdo_connect.php';
+// require_once 'pdo_connect.php';
 require_once 'function.php';
 
 if (!empty($_POST)) {
@@ -47,6 +47,7 @@ if (!empty($_POST)) {
             move_uploaded_file($_FILES['image']['tmp_name'], 'member_picture/' . $image);
             //tmp_nameは一時的に保存してる場所。move_uploaded_file関数でちゃんと保存。一つ目のパラメータが今ある場所、二つ目が新たに保存する場所
         }
+       
         $_SESSION['image'] = $image;
         $_SESSION['join'] = $_POST;
         header('Location: check.php');
@@ -57,6 +58,7 @@ if (!empty($_POST)) {
 if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
     $_POST = $_SESSION['join'];
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +67,6 @@ if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>会員登録</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -90,14 +91,14 @@ if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
                     <dl>
                         <dt>ニックネーム<span class="required">必須</span></dt>
                         <dd>
-                            <input type="text" name="name" size="35" maxlength="255" value="<?php echo (h($_POST['name'])); ?>" />
+                            <input type="text" name="name" size="35" maxlength="255" value="<?= (h($_POST['name'])); ?>" />
                             <?php if ($error['name'] === 'blank') : ?>
                                 <p class="error">*ニックネームを入力してください</p>
                             <?php endif; ?>
                         </dd>
                         <dt>メールアドレス<span class="required">必須</span></dt>
                         <dd>
-                            <input type="text" name="email" size="35" maxlength="255" value="<?php echo (h($_POST['email'])); ?>" />
+                            <input type="text" name="email" size="35" maxlength="255" value="<?= (h($_POST['email'])); ?>" />
                             <?php if ($error['email'] === 'blank') : ?>
                                 <p class="error">*メールアドレスを入力してください</p>
                             <?php elseif ($error['email'] === 'unfit') : ?>
@@ -111,7 +112,7 @@ if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
                             <?php endif; ?>
                         <dt>パスワード<span class="required">必須</span></dt>
                         <dd>
-                            <input type="password" name="password" size="10" maxlength="20" value="<?php echo (h($_POST['password'])); ?>" />
+                            <input type="password" name="password" size="10" maxlength="20" value="<?= (h($_POST['password'])); ?>" />
                             <?php if ($error['password'] === 'length') : ?>
                                 <p class="error">*パスワードは8文字以上入力してください</p>
                             <?php endif; ?>
