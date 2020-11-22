@@ -21,13 +21,30 @@ if (!empty($_POST)) {
         $error['password'] = 'blank';
     }
 
+
+    function getExt($fileName) //ファイル名から拡張子を取得する関数
+    {
+        return pathinfo($fileName, PATHINFO_EXTENSION);
+    }
+
+    function checkExt($fileName) //アップロードされたファイルの拡張子が許可されているか確認する関数
+    {
+        global $cfg;
+        $ext = strtolower(getExt($fileName)); // strtolower関数で大文字の場合は小文字に変換
+        return in_array($ext, $cfg['ALLOW_EXTS']);
+    }
+
+
+    $cfg['ALLOW_EXTS'] = array('jpg', 'jpeg', 'png', 'gif'); //アップロードを許可する拡張子
     $fileName = $_FILES['image']['name'];
+
     if (!empty($fileName)) {
-        $ext = substr($fileName, -3); //拡張子を得る為に
-        if ($ext != 'JPG' && $ext != 'gif' && $ext != 'png') {
+        // $ext = substr($fileName, -3); //拡張子を得る為に
+        if (!checkExt($fileName)) {
             $error['image'] = 'type';
         }
     }
+
 
     // エラーがない場合は次の処理へ。メールが登録されたものと重複してないかチェック
     if (empty($error)) {
@@ -47,7 +64,6 @@ if (!empty($_POST)) {
             move_uploaded_file($_FILES['image']['tmp_name'], 'member_picture/' . $image);
             //tmp_nameは一時的に保存してる場所。move_uploaded_file関数でちゃんと保存。一つ目のパラメータが今ある場所、二つ目が新たに保存する場所
         }
-       
         $_SESSION['image'] = $image;
         $_SESSION['join'] = $_POST;
         header('Location: check.php');
@@ -124,7 +140,7 @@ if ($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])) {
                         <dd>
                             <input type="file" name="image" size="35" value="test">
                             <?php if ($error['image'] === 'type') : ?>
-                                <p class="error">*「.gif」「.png」「.jpg」の写真を使用してください</p>
+                                <p class="error">*「.gif」「.png」「.jpg」「.jpeg」の写真を使用してください</p>
                             <?php endif; ?>
                             <?php if (!empty($error)) : ?>
                                 <p class="error">*もう一度ファイルを指定してください</p>
